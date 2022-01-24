@@ -7,6 +7,8 @@ A new Flutter project.
 This project is a starting point for a Flutter application.
 
 This is how the app looks --
+
+
 <img src="img5.png" height="600"></img>
 
 <img src="img6.png" height="600"></img>
