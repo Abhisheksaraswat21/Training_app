@@ -46,26 +46,21 @@ class _VideoInfoState extends State<VideoInfo> {
     });
   }
 
-//everything in this is initialised before everything is build
   @override
   void initState() {
     super.initState();
 
-//_ lgaane se privste funciton bante hai..mtlb sirf usi file me use honge baakio me ni
     _initData();
   }
 
   @override
   void dispose() {
-    //dispose method ka use kia hai taaki jab next video chalaye tab pichle ke upar na chle ..pehli dispose hojaaye
 
     _disposed = true;
-    //pehli video ko pause krenege ... ? means if controller exists
     _controller?.pause();
 
     _controller?.dispose();
 
-    //it makes sure controller has been removed
     _controller = null;
 
     super.dispose();
@@ -75,8 +70,7 @@ class _VideoInfoState extends State<VideoInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      //ye purple wala box decoration ki design
-      //thumbnail click krne pe na dikhe tb kia hai
+     
 
       decoration: _playArea == false
           ? BoxDecoration(
@@ -94,7 +88,6 @@ class _VideoInfoState extends State<VideoInfo> {
 
       child: Column(
         children: [
-          //YE UPAR WAALE PURPLE BOX KE LIYE HAI---
           _playArea == false
               ? Container(
                   padding: const EdgeInsets.only(top: 70, left: 30, right: 30),
@@ -105,7 +98,6 @@ class _VideoInfoState extends State<VideoInfo> {
                     children: [
                       Row(
                         children: [
-                          //SABSE UPAR WALE ICONS -----
 
                           InkWell(
                             onTap: () {
@@ -154,7 +146,6 @@ class _VideoInfoState extends State<VideoInfo> {
                         height: 50,
                       ),
 
-// AB WO DO JO LIGHT PPURPPLE BOX ME  BANE HAI UNKO BANYA HAI
 
                       Row(
                         children: [
@@ -174,9 +165,7 @@ class _VideoInfoState extends State<VideoInfo> {
                                   end: Alignment.topRight),
                             ),
                             child: Row(
-                              //ye row ke elements ko center me kr dega
-                              //ye kaam hum row se upar amrgin me bhi deskte the pr humne mainaxis align se kia
-// for row mainaxisalign is the horizontal one
+                            
 
                               mainAxisAlignment: MainAxisAlignment.center,
 
@@ -202,7 +191,6 @@ class _VideoInfoState extends State<VideoInfo> {
                             width: 20,
                           ),
 
-// YE DUSRA WALA LIGHT PURPLE BOX HAI ----
 
                           Container(
                             width: 220,
@@ -220,9 +208,7 @@ class _VideoInfoState extends State<VideoInfo> {
                                   end: Alignment.topRight),
                             ),
                             child: Row(
-                              //ye row ke elements ko center me kr dega
-                              //ye kaam hum row se upar amrgin me bhi deskte the pr humne mainaxis align se kia
-// for row mainaxisalign is the horizontal one
+                             
 
                               mainAxisAlignment: MainAxisAlignment.center,
 
@@ -249,7 +235,6 @@ class _VideoInfoState extends State<VideoInfo> {
                   ),
                 )
 
-              //YE BOX TB DIKHEGa JAB HUM THUMBNAIL PE CLICK KRENGE
 
               : Container(
                   child: Column(
@@ -275,7 +260,6 @@ class _VideoInfoState extends State<VideoInfo> {
 
                             Expanded(child: Container()),
 
-                            //ye info wala iconn hai jo topright me hai
                             Icon(
                               Icons.info_outline,
                               size: 20,
@@ -285,7 +269,6 @@ class _VideoInfoState extends State<VideoInfo> {
                         ),
                       ),
 
-                      //ye function video play krega
                       _playView(context),
 
                       _controlView(context),
@@ -293,8 +276,7 @@ class _VideoInfoState extends State<VideoInfo> {
                   ),
                 ),
 
-          //NOW THE AVAILABLE SPACE SHOULD BE WHITE NICCHE KA..TO WE ARE IN A CLOUMN
-          //SO INSTEAD OF USING A NEW ROW WE CAN TAKE ALL THE SPACE BY USING EXPANDED
+      
 
           Expanded(
               child: Container(
@@ -353,8 +335,8 @@ class _VideoInfoState extends State<VideoInfo> {
                   height: 20,
                 ),
 
-                // AB HUM VIDO LIST BNAAYENGE
-
+//VIDEO THUMBNAIL LIST-
+                
                 Expanded(child: _listView())
               ],
             ),
@@ -365,14 +347,11 @@ class _VideoInfoState extends State<VideoInfo> {
   }
 
   String convertTwo(int value) {
-    //single digit me 0 lagaya hai
     return value < 10 ? "0$value" : "$value";
   }
 
-//isme saare controllers honge video play pause etc
   Widget _controlView(BuildContext context) {
-//if controller exists we get a value from it, if the value exists we get volume from it, if vol exists we use volume if it doesnt
-//then we call volume 0 (volume turned off)
+
     final noMute = (_controller?.value?.volume ?? 0) > 0;
 
     final duration = _duration?.inSeconds ?? 0;
@@ -382,7 +361,6 @@ class _VideoInfoState extends State<VideoInfo> {
     final secs = convertTwo(remained % 60);
 
     return Column(
-      //mainAxisAlignment: MainAxisSize.min,
       children: [
         SliderTheme(
             data: SliderTheme.of(context).copyWith(
@@ -438,14 +416,11 @@ class _VideoInfoState extends State<VideoInfo> {
               InkWell(
                 onTap: () {
                   if (noMute) {
-                    //agr nomute me volume hai to 0 krdenge
                     _controller?.setVolume(0);
                   } else {
-                    //wrna 1 krdenge
                     _controller?.setVolume(1.0);
                   }
 
-                  //it makes sure that rerender happens..ye upar wala setstate me bhi daal skte the
                   setState(() {});
                 },
                 child: Padding(
@@ -551,7 +526,7 @@ class _VideoInfoState extends State<VideoInfo> {
                     size: 36,
                     color: Colors.white,
                   )),
-              //it is showing time in the right side --
+              
               Text(
                 "$mins:$secs",
                 style: TextStyle(
@@ -572,22 +547,18 @@ class _VideoInfoState extends State<VideoInfo> {
     );
   }
 
-//yaha pe playscreen ka function hai --
   Widget _playView(BuildContext context) {
-    //this should be able to play things---
 
     final controller = _controller;
 
     if (controller != null && controller.value.isInitialized) {
       return AspectRatio(
-        //this is best aspect ratio for any device
-        //acc to device it sets the width and height
+       
         aspectRatio: 16 / 9,
 
         child: VideoPlayer(controller),
       );
     } else {
-      //jab tk load ni hogi tb tk ye display hogi waha pe ...mtlb preparing likha aayega jb tk video load ni hogi --
 
       return AspectRatio(
           aspectRatio: 16 / 9,
@@ -610,21 +581,17 @@ class _VideoInfoState extends State<VideoInfo> {
   var _progress = 0.0;
 
   void _onControllerUpdate() async {
-//this fn is defined in the listeener which is called many times...so to imporve the efficieny we are
-//checking if the video is dispoed, then it is okay we dont go ahead
 
     if (_disposed) {
       return;
     }
     _onUpdateControllerTime = 0;
 
-//this will give correct time in milliseconds--
     final now = DateTime.now().millisecondsSinceEpoch;
 
     if (_onUpdateControllerTime > now) {
       return;
     }
-    //its like adding 500 sec to it..so if th fn is called too quickly and 500 seconds have not passed yet then upar se hi return krjayega
 
     _onUpdateControllerTime = now + 500;
 
@@ -635,7 +602,6 @@ class _VideoInfoState extends State<VideoInfo> {
       return;
     }
     if (!controller.value.isInitialized) {
-      //this is to check if the controller has been initialsed or not
       debugPrint("controller cannot be initialied");
       return;
     }
@@ -651,8 +617,7 @@ class _VideoInfoState extends State<VideoInfo> {
     var position = await controller.position;
     _position = position;
 
-//ab upar dono ki value paas krne ke baad ab pakka hai ki play krra hai ..
-//to wo value yaha li
+
     final playing = controller.value.isPlaying;
 
     if (playing) {
@@ -670,15 +635,12 @@ class _VideoInfoState extends State<VideoInfo> {
   }
 
   _initialiseVideo(int index) async {
-    //since video is coming from a url that is a network
     final controller =
         VideoPlayerController.network(videoInfo[index]["videoUrl"]);
 
-//we save the previous controller...age ek click kiauske baad dusri click ki...to pehli waali old controller ban gai
     final old = _controller;
 
-//we are saving everything on global variable from local variable taaki fn ke baahr use
-//kr paaye
+
     _controller = controller;
 
     if (old != null) {
@@ -689,19 +651,15 @@ class _VideoInfoState extends State<VideoInfo> {
 
     setState(() {});
 
-//once the initialisation is done we can play the video
 
     controller
       ..initialize().then((_) {
-        //before initialising new one we check if old one exists then we dispose it--
 
         old?.dispose();
-        //we afer storing the index of the video here
         _isPlayingIndex = index;
         controller.addListener(_onControllerUpdate);
         controller.play();
 
-//this ensures redraw happens--
         setState(() {});
       });
   }
@@ -720,19 +678,15 @@ class _VideoInfoState extends State<VideoInfo> {
 
         //videoInfo.length,
 
-        //item builder will access each of the videoinfo using index
         itemBuilder: (_, int index) {
           return GestureDetector(
-            //gesture detecotor me wrap krne se click kr skte hia gesture
-            //detecotr ke child ko
+           
 
             onTap: () {
               debugPrint(index.toString());
 
-              //is function se hum index paas krke video lelenge
               _onTapVideo(index);
 
-//set state triggers signal that helps the widget to redraw
 
               setState(() {
                 if (_playArea == false) {
@@ -753,10 +707,8 @@ class _VideoInfoState extends State<VideoInfo> {
 
       child: Column(
         children: [
-          //is row me image,aur uske side me do text aaye hai
 
           Row(
-            //AB HUM VIDEO WAALI IMAGE KO SET KRRE HAI--
 
             children: [
               Container(
@@ -777,8 +729,7 @@ class _VideoInfoState extends State<VideoInfo> {
                 width: 10,
               ),
 
-              //AB THUMBNAIL KE SAAMNE JO TEXT HAI WO SHOW KRNE HAI
-              //DO TEXT HAI TO UNKO COLUMN ME DAAL DENGE
+             
 
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -797,10 +748,7 @@ class _VideoInfoState extends State<VideoInfo> {
                     height: 10,
                   ),
 
-                  //now to show the second text
-
-                  //sizedbox se kaam chl jayega but humne pasdding widget bna dia
-                  //padding widget me it is compulsory to give padidng.
+                  
                   Padding(
                     padding: const EdgeInsets.only(top: 3),
                     child: Text(
@@ -816,15 +764,12 @@ class _VideoInfoState extends State<VideoInfo> {
             ],
           ),
 
-          // isme second part aara haii
 
           SizedBox(
             height: 18,
           ),
 
-          //second part wala hai isme jo thumbnail ke neeche hai
           Row(children: [
-            //ye wo box hai light purple wala thumbnail ke neeche
 
             Container(
               width: 80,
@@ -834,7 +779,6 @@ class _VideoInfoState extends State<VideoInfo> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Center(
-                //we wrap txt in center to make it center in container
 
                 child: Text(
                   "15 sec rest ",
@@ -845,14 +789,12 @@ class _VideoInfoState extends State<VideoInfo> {
               ),
             ),
 
-            // ye jo dotted lines hai uske liye hai
 
             Row(
               children: [
                 for (int i = 0; i < 70; i++)
                   i.isEven
                       ? Container(
-                          //ye blue waale dashes ke liye hai
                           width: 3,
                           height: 1,
                           decoration: BoxDecoration(
@@ -861,7 +803,6 @@ class _VideoInfoState extends State<VideoInfo> {
                           ),
                         )
                       : Container(
-                          //ye white waale dots ke liye hai
                           width: 3,
                           height: 1,
                           color: Colors.white,
