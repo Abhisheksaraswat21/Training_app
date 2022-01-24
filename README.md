@@ -6,6 +6,15 @@ A new Flutter project.
 
 This project is a starting point for a Flutter application.
 
+This is how the app looks --
+
+<img src="img2.png" height="600"></img>
+
+<img src="img3.png" height="600"></img>
+
+<img src="img4.png" height="600"></img>
+
+
 A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
